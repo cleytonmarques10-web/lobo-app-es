@@ -1533,7 +1533,7 @@ Mano de obra .............. $30"></textarea>
 </div>
 
 <!-- ══ MODAL BOAS-VINDAS / INSTALAR APP ══ -->
-<div class="overlay" id="modal-boasvindas" style="z-index:9999;">
+<div class="overlay" id="modal-boasvindas" style="z-index:1000;">
   <div class="modal" style="max-height:92vh;overflow-y:auto;border-top:4px solid var(--gold);">
     <div style="text-align:center;margin-bottom:6px;">
       <div style="font-size:48px;line-height:1;">📲</div>
@@ -1821,7 +1821,7 @@ function salvarChatHist(){
 }
 
 function apagarConversa(){
-  if(confirm('¿Seguro que quieres eliminar toda a conversa?\n\nEsta ação não pode ser desfeita.')){
+  if(confirm('¿Seguro que quieres borrar toda la conversación?\n\nEsta acción no se puede deshacer.')){
     localStorage.removeItem('lobo_chat_hist');
     localStorage.removeItem('lobo_chat_data');
     chatHist.length = 0;
@@ -1904,9 +1904,9 @@ function esqueceuSenha(){
   // Síula envio de email de recuperação
   const senhas = JSON.parse(localStorage.getItem('lobo_senhas')||'{}');
   if(senhas[email]){
-    alert(`✅ Tu contraseña é: ${senhas[email]}\n\nAñote em um lugar seguro!`);
+    alert(`✅ Tu contraseña es: ${senhas[email]}\n\n¡Anótala en un lugar seguro!`);
   } else {
-    alert(`📧 Se este e-mail está cadastrado, você receberá as instruções.\n\nCaso não lembre, crie uma nova conta com o mesmo e-mail.`);
+    alert(`📧 Si este correo está registrado, recibirás las instrucciones.\n\nSi no recuerdas, crea una nueva cuenta con el mismo correo.`);
   }
 }
 
@@ -2216,7 +2216,7 @@ function renderAlerts(){
 }
 
 function deletarAlerta(idx){
-  if(confirm(`Tem certeza que deseja remover o alerta "${cars[currentCar].items[idx].name}"?\n\nVocê pode adicionar novamente depois.`)){
+  if(confirm(`¿Seguro que quieres eliminar la alerta "${cars[currentCar].items[idx].name}"?\n\nVocê pode adicionar novamente depois.`)){
     cars[currentCar].items.splice(idx,1);
     localStorage.setItem('lobo_cars', JSON.stringify(cars));
     renderAlerts();
@@ -2433,7 +2433,7 @@ function exportarHistoricoPDF(){
 }
 
 function deletarServico(idx){
-  if(confirm('¿Seguro que quieres eliminar este serviço?\n\nEsta ação não pode ser desfeita.')){
+  if(confirm('¿Seguro que quieres eliminar este servicio?\n\nEsta acción no se puede deshacer.')){
     histData[currentCar].splice(idx,1);
     renderHist();
     toast('Serviço removido ✓');
@@ -2614,7 +2614,7 @@ async function consultarFipe(){
     fipeHist.unshift({nome:d.Modelo,marca:marcaN,ano:anoN,preco:d.Valor});
     if(fipeHist.length>3)fipeHist.pop();
     renderFipeHist();
-    const num=parseFloat(d.Valor.replace('$ ','').replace('.','').replace(',','.'));
+    const num=parseFloat(d.Valor.replace('R$ ','').replace('$ ','').replace('.','').replace(',','.'));
     const min=(num*.90).toLocaleString('es',{style:'currency',currency:'BRL'});
     const max=(num*1.10).toLocaleString('es',{style:'currency',currency:'BRL'});
     wrap.innerHTML=`<div class="fipe-result-card">
@@ -2711,7 +2711,7 @@ async function carregarAdminUsers(){
 }
 
 async function excluirAssinante(id, email){
-  if(!confirm(`Tem certeza que deseja excluir o usuário ${email}?\n\nEsta ação não pode ser desfeita.`)) return;
+  if(!confirm(`¿Seguro que quieres eliminar al usuario ${email}?\n\nEsta acción no se puede deshacer.`)) return;
   try {
     const su = 'https://muesqnnwhyrzwxkyyovh.supabase.co';
     const sk = 'sb_publishable_o-70KesxasmgpFSW4Ih2LQ_w_tSMIBu';
@@ -3163,7 +3163,7 @@ setTimeout(carregarFotoSalva, 800);
 initChecklist();
 
 function sairDoApp(){
-  if(confirm('¿Seguro que quieres salir?')){
+  if(confirm('¿Seguro que quieres salir de la app?')){
     localStorage.removeItem('lobo_user');
     location.reload();
   }

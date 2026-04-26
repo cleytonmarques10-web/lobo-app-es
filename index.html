@@ -3079,15 +3079,13 @@ async function analizarUsado(){
     });
     const data = await resp.json();
     const reply = data.content?.[0]?.text || data.reply || '';
-    result.innerHTML = `<div style="background:#f9f9f9;border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-size:14px;line-height:1.7;color:var(--text);">${reply.replace(/
-/g,'<br>')}</div>`;
+    result.innerHTML = '<div style="background:#f9f9f9;border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-size:14px;line-height:1.7;color:var(--text);">' + reply.split('\n').join('<br>') + '</div>';
   } catch(e) {
     result.innerHTML = '<div style="color:var(--red);font-size:13px;padding:10px;">Error al analizar. Intenta de nuevo.</div>';
   }
 }
 
 // Inicializar checklist quando tela for aberta
-const origMudarTela = window.mudarTela;
 
 function abrirInstrucoes(){ abrirModal('modal-instalar'); }
 
@@ -3160,7 +3158,7 @@ function carregarFotoSalva(){
 }
 carregarFotoSalva();
 setTimeout(carregarFotoSalva, 800);
-initChecklist();
+setTimeout(initChecklist, 500);
 
 function sairDoApp(){
   if(confirm('¿Seguro que quieres salir de la app?')){

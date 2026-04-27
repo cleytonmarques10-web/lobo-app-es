@@ -2778,14 +2778,26 @@ function atualizarPerfilUI(){
 
   // Verificar admin
   if(perfilData.email) verificarContaAdmin(perfilData.email);
+  // Verificar também pelo user logado
+  const userLogado = JSON.parse(localStorage.getItem('lobo_user')||'{}');
+  if(userLogado.email) verificarContaAdmin(userLogado.email);
 }
 
 function verificarContaAdmin(email){
+  // Verificar também pelo localStorage direto
+  if(!email){
+    const user = JSON.parse(localStorage.getItem('lobo_user')||'{}');
+    email = user.email || '';
+  }
   if(email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-    document.getElementById('admin-btn-wrap').style.display = 'block';
-    document.getElementById('plano-nome-perfil').textContent = 'Plano Pro — Admin';
-    document.getElementById('plano-status-perfil').textContent = 'Acesso completo e ilimitado ✅';
-    document.getElementById('plano-emoji').textContent = '🛡️';
+    const adminBtn = document.getElementById('admin-btn-wrap');
+    if(adminBtn) adminBtn.style.display = 'block';
+    const planoNome = document.getElementById('plano-nome-perfil');
+    if(planoNome) planoNome.textContent = 'Plan Pro — Admin';
+    const planoStatus = document.getElementById('plano-status-perfil');
+    if(planoStatus) planoStatus.textContent = 'Acceso completo e ilimitado ✅';
+    const planoEmoji = document.getElementById('plano-emoji');
+    if(planoEmoji) planoEmoji.textContent = '🛡️';
     qLeft = 999;
     const ci = document.getElementById('chat-info');
     if(ci) ci.innerHTML = '✅ Cuenta Pro';

@@ -1787,6 +1787,7 @@ const ORC_SYSTEM = "Eres el Analizador de Presupuestos del Lobo de los Talleres.
 
 let qLeft=5, sending=false, orcLoading=false, currentCar=0;
 let recognition=null, isRecording=false;
+let perfilData = JSON.parse(localStorage.getItem('lobo_perfil')||'{}');
 const chatHist = JSON.parse(localStorage.getItem('lobo_chat_hist') || '[]');
 const chatSalvoEm = localStorage.getItem('lobo_chat_data');
 
@@ -2260,6 +2261,7 @@ function salvarHist(){
 /* ── COMBUSTÍVEL ── */
 function renderFuel(){
   const grid=document.getElementById('fuel-grid');
+  if(!grid) return;
   const minG=Math.min(...regions.map(r=>r.gas));
   const maxG=Math.max(...regions.map(r=>r.gas));
   grid.innerHTML=regions.map(r=>{
@@ -2716,7 +2718,6 @@ async function excluirAssinante(id, email){
 }
 
 let filtroAtual = 'todos';
-let perfilData = JSON.parse(localStorage.getItem('lobo_perfil')||'{}');
 
 function formatarTel(val){
   const n = val.replace(/\D/g,'');

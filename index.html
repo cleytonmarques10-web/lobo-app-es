@@ -1995,8 +1995,8 @@ function openAddCar(){
 
 async function registrarUsuarioSupabase(email, nome, whatsapp=''){
   try {
-    const su = 'https://muesqnnwhyrzwxkyyovh.supabase.co';
-    const sk = 'sb_publishable_o-70KesxasmgpFSW4Ih2LQ_w_tSMIBu';
+    const su = 'https://aasjivcgbcoucofjbrnv.supabase.co';
+    const sk = 'sb_publishable_a1dZWZiBvPfigl7fKnfprw_Yj52HdBi';
     const r = await fetch(`${su}/rest/v1/assinantes?email=eq.${encodeURIComponent(email)}`, {
       headers: {'apikey': sk, 'Authorization': `Bearer ${sk}`}
     });
@@ -2498,7 +2498,7 @@ async function analisarOrc(){
     else {
       // Se não vier JSON, mostrar resposta como texto
       if(raw.length > 10){
-        wrap.innerHTML=`<div style="padding:16px;font-size:14px;color:#333;line-height:1.6;">${raw.replace(/\n/g,'<br>')}</div>`;
+        wrap.innerHTML='<div style="padding:16px;font-size:14px;color:#333;line-height:1.6;">' + raw.split('\n').join('<br>') + '</div>';}</div>`;
       } else {
         wrap.innerHTML='<div style="padding:16px;font-size:14px;color:#666;">No consegui analisar. Verifique e tente de novo.</div>';
       }
@@ -2689,8 +2689,8 @@ let adminUsers = [];
 
 async function carregarAdminUsers(){
   try {
-    const su = 'https://muesqnnwhyrzwxkyyovh.supabase.co';
-    const sk = 'sb_publishable_o-70KesxasmgpFSW4Ih2LQ_w_tSMIBu';
+    const su = 'https://aasjivcgbcoucofjbrnv.supabase.co';
+    const sk = 'sb_publishable_a1dZWZiBvPfigl7fKnfprw_Yj52HdBi';
     const r = await fetch(`${su}/rest/v1/assinantes?select=*&order=data_compra.desc`, {
       headers: {'apikey': sk, 'Authorization': `Bearer ${sk}`}
     });
@@ -2715,8 +2715,8 @@ async function carregarAdminUsers(){
 async function excluirAssinante(id, email){
   if(!confirm(`¿Seguro que quieres eliminar al usuario ${email}?\n\nEsta acción no se puede deshacer.`)) return;
   try {
-    const su = 'https://muesqnnwhyrzwxkyyovh.supabase.co';
-    const sk = 'sb_publishable_o-70KesxasmgpFSW4Ih2LQ_w_tSMIBu';
+    const su = 'https://aasjivcgbcoucofjbrnv.supabase.co';
+    const sk = 'sb_publishable_a1dZWZiBvPfigl7fKnfprw_Yj52HdBi';
     await fetch(`${su}/rest/v1/assinantes?id=eq.${id}`, {
       method: 'DELETE',
       headers: {'apikey': sk, 'Authorization': `Bearer ${sk}`}
@@ -2760,8 +2760,8 @@ function salvarPerfil(){
 
 async function salvarTeléfonoSupabase(email, tel){
   try {
-    const su = 'https://muesqnnwhyrzwxkyyovh.supabase.co';
-    const sk = 'sb_publishable_o-70KesxasmgpFSW4Ih2LQ_w_tSMIBu';
+    const su = 'https://aasjivcgbcoucofjbrnv.supabase.co';
+    const sk = 'sb_publishable_a1dZWZiBvPfigl7fKnfprw_Yj52HdBi';
     await fetch(`${su}/rest/v1/assinantes?email=eq.${encodeURIComponent(email)}`, {
       method: 'PATCH',
       headers: {
@@ -3148,6 +3148,26 @@ function instalarPWA(){
 }
 
 // Carregar foto salva
+function carregarFotoSalva(){
+  const foto = localStorage.getItem('lobo_foto');
+  if(foto){
+    const imgTag = `<img src="${foto}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    const av = document.getElementById('perfil-avatar');
+    if(av) av.innerHTML = imgTag;
+    const hav = document.getElementById('header-avatar');
+    if(hav) hav.innerHTML = imgTag;
+  }
+}
+carregarFotoSalva();
+setTimeout(carregarFotoSalva, 800);
+setTimeout(initChecklist, 500);
 
-
-
+function sairDoApp(){
+  if(confirm('¿Seguro que quieres salir de la app?')){
+    localStorage.removeItem('lobo_user');
+    location.reload();
+  }
+}
+</script>
+</body>
+</html>

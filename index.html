@@ -1781,24 +1781,9 @@ Mano de obra .............. $30"></textarea>
 
 <script>
 /* ═══ SISTEMA ═══ */
-const SYSTEM = `Eres el Lobo de los Talleres, un mecánico experto con más de 30 años de experiencia ayudando a conductores de México, Colombia, Perú, Ecuador y toda América Latina a no ser estafados en los talleres.
+const SYSTEM = "Eres el Lobo de los Talleres, un mecánico experto con más de 30 años de experiencia ayudando a conductores de México, Colombia, Perú, Ecuador y toda América Latina a no ser estafados en los talleres.\n\nREGLAS DE RESPUESTA:\n1. Responde SIEMPRE en español latinoamericano. NUNCA en portugués.\n2. Nunca seas neutral. Si el problema es serio, dilo claramente: 'Si no lo resuelves pronto, puede convertirse en un problema mucho más caro.'\n3. Da urgencia cuando sea necesario: 'Esto no puede esperar.'\n4. Informa el precio justo del mercado en dólares (USD). Si el presupuesto parece alto, di: 'Este valor está por encima del mercado. Pide otro presupuesto.'\n5. Termina siempre con una acción clara: lo que el usuario debe hacer AHORA.\n6. Usa **negritas** en los puntos más importantes.\n7. Máximo 200 palabras. Lenguaje simple, sin términos técnicos difíciles.\n8. Si detectas posible estafa, avisa sin miedo: 'Esto es un cobro innecesario muy común en talleres deshonestos.'\n9. Usa precios en dólares americanos (USD) como referencia.";
 
-REGLAS DE RESPUESTA:
-1. Responde SIEMPRE en español latinoamericano. NUNCA en portugués.
-2. Nunca seas neutral. Si el problema es serio, dilo claramente: "Si no lo resuelves pronto, puede convertirse en un problema mucho más caro."
-3. Da urgencia cuando sea necesario: "Esto no puede esperar."
-4. Informa el precio justo del mercado en dólares (USD). Si el presupuesto parece alto, di: "Este valor está por encima del mercado. Pide otro presupuesto."
-5. Termina siempre con una acción clara: lo que el usuario debe hacer AHORA.
-6. Usa **negritas** en los puntos más importantes.
-7. Máximo 200 palabras. Lenguaje simple, sin términos técnicos difíciles.
-8. Si detectas posible estafa, avisa sin miedo: "Esto es un cobro innecesario muy común en talleres deshonestos."
-9. Usa precios en dólares americanos (USD) como referencia.`;
-
-const ORC_SYSTEM = `Eres el Analizador de Presupuestos del Lobo de los Talleres. Analiza presupuestos de talleres mecánicos en América Latina. Responde SIEMPRE en español.
-
-Retorna SOLO un JSON válido, sin texto extra:
-{"veredicto":"SOSPECHOSO"|"ATENCIÓN"|"JUSTO","puntuacion":0-100,"resumen":"frase corta","items":[{"tipo":"danger"|"warn"|"ok","titulo":"nombre del item","analisis":"explicación simple"}],"ahorro_posible":"ej: $50","consejo_final":"consejo práctico"}
-Retorna SOLO el JSON.`;
+const ORC_SYSTEM = "Eres el Analizador de Presupuestos del Lobo de los Talleres. Analiza presupuestos de talleres mecánicos en América Latina. Responde SIEMPRE en español.\n\nRetorna SOLO un JSON válido, sin texto extra:\n{\"veredicto\":\"SOSPECHOSO\"|\"ATENCIÓN\"|\"JUSTO\",\"puntuacion\":0-100,\"resumen\":\"frase corta\",\"items\":[{\"tipo\":\"danger\"|\"warn\"|\"ok\",\"titulo\":\"nombre del item\",\"analisis\":\"explicación simple\"}],\"ahorro_posible\":\"ej: $50\",\"consejo_final\":\"consejo práctico\"}\nRetorna SOLO el JSON.";
 
 let qLeft=5, sending=false, orcLoading=false, currentCar=0;
 let recognition=null, isRecording=false;
@@ -2428,7 +2413,7 @@ function exportarHistoricoPDF(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `historico-${carro.replace(/\s/g,'-')}.html`;
+  a.download = 'historial-' + carro.replace(/ /g,'-') + '.html';
   a.click();
   URL.revokeObjectURL(url);
   toast('Histórico exportado! Abra o arquivo e imprima como PDF 📄');
@@ -2498,7 +2483,7 @@ async function analisarOrc(){
     else {
       // Se não vier JSON, mostrar resposta como texto
       if(raw.length > 10){
-        wrap.innerHTML='<div style="padding:16px;font-size:14px;color:#333;line-height:1.6;">' + raw.split('\n').join('<br>') + '</div>';}</div>`;
+        wrap.innerHTML='<div style="padding:16px;font-size:14px;color:#333;line-height:1.6;">' + raw.split('\n').join('<br>') + '</div>';
       } else {
         wrap.innerHTML='<div style="padding:16px;font-size:14px;color:#666;">No consegui analisar. Verifique e tente de novo.</div>';
       }
@@ -2528,21 +2513,21 @@ async function redimensionarImagem(base64, tipo){
   });
 }
 function renderOrcResult(r){
-  const cls=r.veredicto==='SUSPEITO'?'suspeito':r.veredicto==='ATENÇÃO'?'atencao':'justo';
-  const ico=r.veredicto==='SUSPEITO'?'🚨':r.veredicto==='ATENÇÃO'?'⚠️':'✅';
+  const cls=r.veredicto==='SOSPECHOSO'?'suspeito':r.veredicto==='ATENCIÓN'?'atencao':'justo';
+  const ico=r.veredicto==='SOSPECHOSO'?'🚨':r.veredicto==='ATENCIÓN'?'⚠️':'✅';
   const itens=(r.itens||[]).map(i=>`<div class="orc-item ${i.tipo}">
     <div class="orc-item-ico">${i.tipo==='danger'?'🚨':i.tipo==='warn'?'⚠️':'✅'}</div>
-    <div><div class="orc-item-title">${i.titulo}</div><div class="orc-item-desc">${i.analise}</div></div>
+    <div><div class="orc-item-title">${i.titulo}</div><div class="orc-item-desc">${i.analisis}</div></div>
   </div>`).join('');
   document.getElementById('orc-result').innerHTML=`<div class="orc-result-card">
     <div class="orc-result-top">
-      <div><div class="orc-verdict-lbl">Resultado da análise</div><div class="orc-verdict-val ${cls}">${ico} ${r.veredicto}</div></div>
-      <div class="orc-score-val ${cls}">${r.pontuacao}<span style="font-size:16px;color:#aaa">/100</span></div>
+      <div><div class="orc-verdict-lbl">Resultado del análisis</div><div class="orc-verdict-val ${cls}">${ico} ${r.veredicto}</div></div>
+      <div class="orc-score-val ${cls}">${r.puntuacion}<span style="font-size:16px;color:#aaa">/100</span></div>
     </div>
     <div class="orc-result-body">
-      <div class="orc-result-resumo">${r.resumo||''}</div>
+      <div class="orc-result-resumo">${r.resumen||''}</div>
       ${itens}
-      <div class="orc-conselho"><strong>O que fazer agora:</strong> ${r.conselho_final||''}${r.economia_possivel?`<br><strong>Você pode economizar:</strong> ${r.economia_possivel}`:''}</div>
+      <div class="orc-conselho"><strong>¿Qué hacer ahora?:</strong> ${r.consejo_final||''}${r.ahorro_posible?`<br><strong>Puedes ahorrar:</strong> ${r.ahorro_posible}`:''}</div>
     </div>
   </div>`;
 }

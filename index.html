@@ -2820,6 +2820,11 @@ setTimeout(checkAdminRepeat, 1500);
 setTimeout(checkAdminRepeat, 3000);
 
 async function verificarAssinatura(email){
+  // Se for admin, não precisa verificar assinatura
+  if(email && email.toLowerCase().trim() === ADMIN_EMAIL.toLowerCase().trim()){
+    verificarContaAdmin(email);
+    return { ativo: true };
+  }
   try {
     const res = await fetch('/api/verify', {
       method: 'POST',
@@ -2836,13 +2841,19 @@ async function verificarAssinatura(email){
       const planoStatus = document.getElementById('plano-status-perfil');
       const planoEmoji = document.getElementById('plano-emoji');
       const planoBadge = document.getElementById('perfil-plano-badge');
-      if(planoNome) planoNome.textContent = data.plano || 'Plano Pro';
-      if(planoStatus) planoStatus.textContent = 'Acesso completo e ilimitado ✅';
+      if(planoNome) planoNome.textContent = data.plano || 'Plan Pro';
+      if(planoStatus) planoStatus.textContent = 'Acceso completo e ilimitado ✅';
       if(planoEmoji) planoEmoji.textContent = '⭐';
-      if(planoBadge) planoBadge.textContent = data.plano || 'Plano Pro';
+      if(planoBadge) planoBadge.textContent = data.plano || 'Plan Pro';
       if(data.status === 'atrasado' && data.aviso){
         setTimeout(()=>toast('⚠️ ' + data.aviso), 2000);
       }
+    } else {
+      // Usuário gratuito
+      const planoNome = document.getElementById('plano-nome-perfil');
+      const planoStatus = document.getElementById('plano-status-perfil');
+      if(planoNome) planoNome.textContent = 'Plan Gratuito';
+      if(planoStatus) planoStatus.textContent = '5 preguntas gratuitas disponibles';
     }
     return data;
   } catch(e) {
@@ -2912,7 +2923,7 @@ function renderUsuarios(){
   }
 
   const statusIcon = {ativo:'✅',atrasado:'⏳',cancelado:'❌',suspenso:'🚫',gratuito:'🆓'};
-  const statusLabel = {ativo:'Ativo',atrasado:'Atrasado',cancelado:'Cancelado',suspenso:'Suspenso',gratuito:'Gratuito'};
+  const statusLabel = {ativo:'Activo',atrasado:'Atrasado',cancelado:'Cancelado',suspenso:'Suspendido',gratuito:'Gratuito'};
 
   wrap.innerHTML = lista.map(u=>{
     const diasCadastro = u.data_compra
@@ -2933,7 +2944,7 @@ function renderUsuarios(){
       <div class="user-info" style="flex:1;">
         <div class="user-name">${u.nome||'—'}</div>
         <div class="user-email">${u.email}</div>
-        <div class="user-plano status-${u.status}">${statusIcon[u.status]||'👤'} ${u.plano} · ${statusLabel[u.status]||u.status}</div>
+        <div class="user-plano status-${u.status}">${statusIcon[u.status]||'👤'} ${statusLabel[u.status]||u.status}</div>
         ${u.data_compra ? `<div style="font-size:11px;color:#aaa;margin-top:2px;">📅 ${new Date(u.data_compra).toLocaleDateString('es')}${diasCadastro !== null ? ` · ${diasCadastro} dias` : ''}</div>` : ''}
         ${temTel ? `<div style="font-size:11px;color:#27ae60;margin-top:2px;">📱 ${u.whatsapp||u.tel}</div>` : ''}
       </div>

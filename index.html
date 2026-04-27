@@ -1352,8 +1352,8 @@ Mano de obra .............. $30"></textarea>
     <div id="plano-atual-box" style="background:#fff;border:2px solid var(--gold);border-radius:var(--radius);padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:14px;">
       <div style="font-size:32px;" id="plano-emoji">⭐</div>
       <div style="flex:1;">
-        <div style="font-size:16px;font-weight:900;color:var(--black);" id="plano-nome-perfil">Plano Grátis</div>
-        <div style="font-size:13px;color:var(--text3);margin-top:2px;" id="plano-status-perfil">5 preguntas gratuitas no total</div>
+        <div style="font-size:16px;font-weight:900;color:var(--black);" id="plano-nome-perfil">Cargando...</div>
+        <div style="font-size:13px;color:var(--text3);margin-top:2px;" id="plano-status-perfil">Verificando tu plan...</div>
       </div>
     </div>
 
@@ -2652,7 +2652,7 @@ renderCarPills(); renderAlerts(); renderHist(); renderFuel(); calcFuel();
 loadMarcas();
 
 setTimeout(()=>{
-  addMsg('bot','Olá! Sou o **Lobo de los Talleres** 🐺\n\nPode me perguntar qualquer coisa sobre seu carro — basta escrever ou usar o **microfone** 🎤 para falar!\n\nEstou aqui para te ajudar! ✅ v2');
+  addMsg('bot','¡Hola! Soy el **Lobo de los Talleres** 🐺\n\n¡Puedes preguntarme cualquier cosa sobre tu auto — escribe abajo o usa el **micrófono** 🎤 para hablar!\n\n¡Estoy aquí para ayudarte! ✅');
   carregarChatSalvo();
 },500);
 
@@ -2940,7 +2940,7 @@ function renderUsuarios(){
       <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
         ${temTel
           ? `<a href="https://wa.me/55${telLimpo}?text=${msgContato}" target="_blank" style="background:#25D366;color:#fff;border-radius:6px;font-size:11px;font-weight:700;padding:4px 8px;text-decoration:none;display:flex;align-items:center;gap:4px;">📱 Teléfono</a>`
-          : `<a href="mailto:${u.email}?subject=Lobo de los Talleres&body=Hola ${u.nome ? u.nome.split(' ')[0] : ''}! Aqui é o Lobo de los Talleres 🐺 Como está sendo sua experiência no app?" style="background:#4A90E2;color:#fff;border-radius:6px;font-size:11px;font-weight:700;padding:4px 8px;text-decoration:none;">✉️ Email</a>`
+          : `<a href="mailto:${u.email}?subject=Lobo de los Talleres&body=Hola ${u.nome ? u.nome.split(' ')[0] : ''}! Aquí es el Lobo de los Talleres 🐺 ¿Cómo va tu experiencia con la app?" style="background:#4A90E2;color:#fff;border-radius:6px;font-size:11px;font-weight:700;padding:4px 8px;text-decoration:none;">✉️ Email</a>`
         }
         <button onclick="excluirAssinante(${u.id},'${u.email}')" style="background:none;border:1px solid #ffcccc;border-radius:6px;color:#e74c3c;font-size:11px;font-weight:700;cursor:pointer;padding:4px 8px;">🗑️ Eliminar</button>
       </div>
@@ -2960,7 +2960,7 @@ function setFiltro(f, el){
 }
 
 function whatsappMassa(){
-  const msg = encodeURIComponent('Olá! Aqui é o Lobo de los Talleres. Temos uma novidade para você no nosso app! 🐺');
+  const msg = encodeURIComponent('¡Hola! Aquí es el Lobo de los Talleres. ¿En qué puedo ayudarte con tu auto? 🐺');
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 

@@ -927,7 +927,7 @@ body {
       <label style="font-size:13px;font-weight:700;color:var(--text3);display:block;margin-bottom:6px;">Tu nombre</label>
       <input id="login-nome" type="text" placeholder="Ej: Juan" style="width:100%;background:var(--gray);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;">
     </div>
-    <div id="form-cadastro-tel" style="display:none;margin-bottom:12px;">
+    <div id="form-cadastro-tel" style="display:none !important;margin-bottom:12px;">
       <label style="font-size:13px;font-weight:700;color:var(--text3);display:block;margin-bottom:6px;">Tu contacto</label>
       <input id="login-tel" type="tel" placeholder="(00) 00000-0000" oninput="this.value=formatarTel(this.value)" style="width:100%;background:var(--gray);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;">
     </div>
@@ -1886,7 +1886,7 @@ function setLoginTab(tab){
   document.getElementById('tab-cadastro').style.background = !isLogin ? 'var(--black)' : 'none';
   document.getElementById('tab-cadastro').style.color = !isLogin ? 'var(--gold)' : 'var(--text3)';
   document.getElementById('form-cadastro-nome').style.display = isLogin ? 'none' : 'block';
-  document.getElementById('form-cadastro-tel').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('form-cadastro-tel').style.display = 'none';
   document.getElementById('login-btn').textContent = isLogin ? 'Entrar a la app' : 'Crear mi cuenta';
 }
 
@@ -1928,7 +1928,7 @@ function fazerLogin(){
   if(!email || !senha){ erro.textContent='Preencha email e senha.'; erro.style.display='block'; return; }
   if(senha.length < 6){ erro.textContent='A senha precisa ter no mínimo 6 caracteres.'; erro.style.display='block'; return; }
   if(loginTab==='cadastro' && !nome){ erro.textContent='Digite seu nome.'; erro.style.display='block'; return; }
-  if(loginTab==='cadastro' && !tel){ erro.textContent='Digite seu Teléfono.'; erro.style.display='block'; return; }
+
 
   // Salvar dados do usuário
   const userData = { email, nome: nome || email.split('@')[0] };
